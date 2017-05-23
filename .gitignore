@@ -1,5 +1,8 @@
 *.o
 student/*.o
 student/*.d
+student/unit_test
+student/histogram_seq
+student/histogram_par
 test.o
 *.swp
