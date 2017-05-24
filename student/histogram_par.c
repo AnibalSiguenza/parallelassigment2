@@ -30,7 +30,7 @@ void * count_words_in_chunk(void * ptr){
         //End of critiv section
         pthread_mutex_unlock(&mutex);
         for (int i=0; i<CHUNKSIZE; i++) {
-            if(isalpha(args->buffer[i+init])){
+            if(isalpha(args->buffer[i+init])&& i%CHUNKSIZE!=0){
                 current_word[c++] = args->buffer[i+init];
             } else {
                 current_word[c] = '\0';
@@ -50,7 +50,7 @@ void get_histogram(char *buffer, int* histogram, int num_threads){
     arg = (struct pthread_args *)calloc(num_threads,sizeof(*arg));
     for(int i=0;i<num_threads;i++){
         arg[i].buffer=buffer;
-        pthread_create(thread+i,NULL,&count_words_in_chunk,arg+1);
+        pthread_create(thread+i,NULL,&count_words_in_chunk,arg+i);
     }
     for(int i=0;i<num_threads;i++){
         pthread_join(thread[i],NULL);
